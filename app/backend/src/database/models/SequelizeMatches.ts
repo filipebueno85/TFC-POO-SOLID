@@ -20,7 +20,6 @@ InferCreationAttributes<SequelizeMatches>> {
   declare awayTeamId: number;
 
   declare inProgress: boolean;
-
 }
 
 SequelizeMatches.init({
@@ -57,7 +56,7 @@ SequelizeMatches.init({
   inProgress: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-  }
+  },
 }, {
   sequelize: db,
   modelName: 'matches',
