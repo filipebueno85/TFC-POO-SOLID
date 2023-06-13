@@ -1,9 +1,9 @@
 import {
+  CreationOptional,
   DataTypes,
-  Model,
   InferAttributes,
   InferCreationAttributes,
-  CreationOptional,
+  Model,
 } from 'sequelize';
 import db from '.';
 // import OtherModel from './OtherModel';
@@ -33,6 +33,7 @@ Example.init({
 
 // OtherModel.belongsTo(Example, { foreignKey: 'campoA', as: 'campoEstrangeiroA' });
 // OtherModel.belongsTo(Example, { foreignKey: 'campoB', as: 'campoEstrangeiroB' });
+
 
 // Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
 // Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
