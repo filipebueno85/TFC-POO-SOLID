@@ -40,4 +40,9 @@ export default class MatchesController {
   //   }
   //   return res.status(200).json(serviceResponse.data);
   // }
+
+  public async create(req: Request, res: Response) {
+    const serviceResponse = await this._matchesService.create(req.body);
+    return res.status(201).json(serviceResponse);
+  }
 }

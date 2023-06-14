@@ -18,6 +18,12 @@ matchesRouter.patch(
   (req: Request, res: Response) => matchesController.update(req, res),
 );
 
+matchesRouter.post(
+  '/matches',
+  Validate.validateToken,
+  (req: Request, res: Response) => matchesController.create(req, res),
+);
+
 matchesRouter.patch(
   '/matches/:id',
   Validate.validateToken,

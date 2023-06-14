@@ -10,7 +10,18 @@ export interface IMatche extends Identifiable {
   // homeTeam: ITeam;
   // awayTeam: ITeam;
 }
+
+export interface IMatchCreate extends Identifiable {
+  homeTeamId: number;
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+  awayTeamId: number;
+  // inProgress: boolean;
+}
+
 export interface IMatcheGet extends IMatche {
   homeTeam: ITeam;
   awayTeam: ITeam;
 }
+
+export type IMatchCreateResponse = IMatchCreate;

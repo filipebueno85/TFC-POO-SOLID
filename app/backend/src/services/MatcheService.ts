@@ -1,6 +1,7 @@
 import * as sequelize from 'sequelize';
+import { NewEntity } from '../Interfaces';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
-import { IMatche } from '../Interfaces/matches/IMatche';
+import { IMatchCreate, IMatche } from '../Interfaces/matches/IMatche';
 import { IMatcheModel } from '../Interfaces/matches/IMatcheModel';
 import SequelizeTeam from '../database/models/SequelizeTeam';
 import MatchesModel from '../models/MatchesModel';
@@ -53,25 +54,9 @@ export default class MatchesService {
     await this._matchModel.update(id, data);
   }
 
-  // async create(match: Omit<InferCreationAttributes<SequelizeMatches>, 'id'>): Promise<IMatche> {
-  //   const newMatch = await this._matchModel.create(match);
-  //   const {
-  //     id,
-  //     homeTeamId,
-  //     homeTeamGoals,
-  //     awayTeamId,
-  //     awayTeamGoals,
-  //     inProgress,
-  //   } = newMatch;
-  //   return {
-  //     id,
-  //     homeTeamId,
-  //     homeTeamGoals,
-  //     awayTeamId,
-  //     awayTeamGoals,
-  //     inProgress,
-  //     homeTeam: { teamName: this.getTeamName(homeTeam, 'teamName') },
-  //     awayTeam: { teamName: this.getTeamName(awayTeam, 'teamName') },
-  //   };
-  // }
+  async create(match: NewEntity<IMatchCreate>):
+  Promise<IMatche> {
+    const newMatch = await this._matchModel.create({ ...match, inProgress: true });
+    return newMatch;
+  }
 }

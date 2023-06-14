@@ -1,4 +1,5 @@
-import { FindOptions, InferCreationAttributes } from 'sequelize';
+import { FindOptions } from 'sequelize';
+import { NewEntity } from '../Interfaces';
 import { IMatche } from '../Interfaces/matches/IMatche';
 import { IMatcheModel } from '../Interfaces/matches/IMatcheModel';
 import SequelizeMatches from '../database/models/SequelizeMatches';
@@ -26,17 +27,10 @@ export default class MatchesModel implements IMatcheModel {
     await this.model.update(data, { where: { id } });
   }
 
-  async create(user: Omit<InferCreationAttributes<SequelizeMatches,
-  { omit: never; }>, 'id'>): Promise<IMatche> {
-    const newUser = await this.model.create(user);
-    const { id, homeTeamId,
-      homeTeamGoals, awayTeamId,
-      awayTeamGoals, inProgress } = newUser;
-    return { id,
-      homeTeamId,
-      homeTeamGoals,
-      awayTeamId,
-      awayTeamGoals,
-      inProgress };
+  // Omit<InferCreationAttributes<SequelizeMatches,
+  // { omit: never; }>, 'id'>
+  async create(matches: NewEntity<IMatche>): Promise<IMatche> {
+    const newMatch = await this.model.create(matches);
+    return newMatch;
   }
 }
