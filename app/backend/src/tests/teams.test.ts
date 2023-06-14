@@ -60,7 +60,7 @@ describe('Teams Test', () => {
     const { status, body } = await chai.request(app).get('/teams/55');
 
     expect(status).to.equal(404);
-    expect(body).to.deep.equal('Team 55 not found!');
+    expect(body).to.be.deep.equal( {message: 'Team 55 not found!'});
   })
   /**
    * Exemplo do uso de stubs com tipos

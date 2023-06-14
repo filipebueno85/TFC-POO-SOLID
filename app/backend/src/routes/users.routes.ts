@@ -20,7 +20,7 @@ userRouter.post(
 );
 
 userRouter.post(
-  '/user',
+  '/users',
   Validate.validateToken,
   (req: Request, res: Response) => userController.createUser(req, res),
 );

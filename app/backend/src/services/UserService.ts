@@ -2,7 +2,13 @@ import * as bcrypt from 'bcryptjs';
 import { NewEntity } from '../Interfaces';
 import { IToken } from '../Interfaces/IToken';
 import { ServiceMessage, ServiceResponse } from '../Interfaces/ServiceResponse';
-import { ILogin, IUser, IUserResponse } from '../Interfaces/users/IUser';
+import {
+  ILogin,
+  IUser,
+  IUserCreate,
+  IUserCreateResponse,
+  IUserResponse,
+} from '../Interfaces/users/IUser';
 import { IUserModel } from '../Interfaces/users/IUserModel';
 import UserModel from '../models/UserModel';
 import JWT from '../utils/JWT';
@@ -40,15 +46,15 @@ export default class UserService {
     return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
   }
 
-  public async createUser(user: NewEntity<IUser>):
-  Promise<ServiceResponse<IUserResponse | ServiceMessage>> {
+  public async createUser(user: NewEntity<IUserCreate>):
+  Promise<ServiceResponse<IUserCreateResponse | ServiceMessage>> {
     const userFound = await this.userModel.findByEmail(user.email);
     if (userFound) return { status: 'CONFLICT', data: { message: 'User already exists' } };
 
     const userPassword = bcrypt.hashSync(user.password, 15);
     const newUser = await this.userModel.create({ ...user, password: userPassword });
-    const { id, email, role } = newUser as IUser;
+    const { id, username, email, role } = newUser as IUserCreate;
 
-    return { status: 'SUCCESSFUL', data: { id, email, role } };
+    return { status: 'SUCCESSFUL', data: { id, username, email, role } };
   }
 }
