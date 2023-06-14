@@ -6,6 +6,7 @@ import {
   Model,
 } from 'sequelize';
 import db from '.';
+import SequelizeTeam from './SequelizeTeam';
 
 class SequelizeMatches extends Model<InferAttributes<SequelizeMatches>,
 InferCreationAttributes<SequelizeMatches>> {
@@ -32,10 +33,10 @@ SequelizeMatches.init({
   homeTeamId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: 'teams',
-      key: 'id',
-    },
+    // references: {
+    //   model: 'teams',
+    //   key: 'id',
+    // },
   },
   homeTeamGoals: {
     type: DataTypes.INTEGER,
@@ -48,10 +49,10 @@ SequelizeMatches.init({
   awayTeamId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: 'teams',
-      key: 'id',
-    },
+    // references: {
+    //   model: 'teams',
+    //   key: 'id',
+    // },
   },
   inProgress: {
     type: DataTypes.BOOLEAN,
@@ -59,8 +60,27 @@ SequelizeMatches.init({
   },
 }, {
   sequelize: db,
+  underscored: true,
   modelName: 'matches',
   timestamps: false,
+});
+
+SequelizeTeam.hasMany(SequelizeMatches, {
+  foreignKey: 'home_team_id',
+  as: 'homeTeam',
+});
+SequelizeMatches.belongsTo(SequelizeTeam, {
+  foreignKey: 'home_team_id',
+  as: 'homeTeam',
+});
+
+SequelizeTeam.hasMany(SequelizeMatches, {
+  foreignKey: 'away_team_id',
+  as: 'awayTeam',
+});
+SequelizeMatches.belongsTo(SequelizeTeam, {
+  foreignKey: 'away_team_id',
+  as: 'awayTeam',
 });
 
 export default SequelizeMatches;

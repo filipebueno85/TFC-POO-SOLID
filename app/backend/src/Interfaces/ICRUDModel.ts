@@ -22,4 +22,4 @@ export interface ICRUDModelReader<T> {
 // }
 
 export interface ICRUDModel<T>
-  extends ICRUDModelCreator<T>, ICRUDModelReader<T> { }
+  extends ICRUDModelCreator<T>, ICRUDModelReader<T> {}
