@@ -3,16 +3,28 @@ import * as Joi from 'joi';
 import { JwtPayload } from 'jsonwebtoken';
 import JWT from '../utils/JWT';
 
+const invalidString = 'Invalid email or password';
+const invalidField = 'All fields must be filled';
+
 const schemaUser = Joi.object({
-  email: Joi.string().email().required()
+  email: Joi.string().email()
     .messages({
-      'email.base': 'Invalid email or password',
-      'any.required': 'All fields must be filled',
+      'string.email': invalidString,
     }),
-  password: Joi.string().min(6).required().messages({
-    '': '"password" must be a string',
-    'string.min': 'Invalid email or password',
-    'any.required': 'All fields must be filled',
+  password: Joi.string().min(6).messages({
+    'string.min': invalidString,
+  }),
+});
+
+const schemaUserRequired = Joi.object({
+  email: Joi.string().empty('').required()
+    .messages({
+      'any.required': invalidField,
+      'string.empty': invalidField,
+    }),
+  password: Joi.string().required().empty('').messages({
+    'any.required': invalidField,
+    'string.empty': invalidField,
   }),
 });
 
@@ -24,6 +36,18 @@ export default class Validate {
   ): Promise<Response | void> {
     const { error } = schemaUser.validate(req.body);
 
+    if (error) return res.status(401).json({ message: error.message });
+
+    return next();
+  }
+
+  static async validateLogin(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> {
+    const { error } = schemaUserRequired.validate(req.body);
+
     if (error) return res.status(400).json({ message: error.message });
 
     return next();
@@ -33,16 +57,14 @@ export default class Validate {
   Promise<Response | void> {
     const token = req.headers.authorization;
     if (!token) {
-      return res.status(404).json({ message: 'Token not found' });
+      return res.status(401).json({ message: 'Token not found' });
     }
-    const invalidToken = JWT.verify(token);
-    if (invalidToken === 'Token must be a valid token') {
-      return res.status(401).json({ message: invalidToken });
+    try {
+      const validToken = JWT.verify(token) as JwtPayload;
+      req.body.loginRole = validToken.role;
+      next();
+    } catch (error) {
+      return res.status(401).json({ message: 'Token must be a valid token' });
     }
-    const validToken = JWT.verify(token) as JwtPayload;
-    if (validToken.role === 'admin') {
-      return res.status(200).json({ role: validToken });
-    }
-    next();
   }
 }

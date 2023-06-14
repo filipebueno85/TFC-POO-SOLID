@@ -13,10 +13,10 @@ export default class JWT {
   }
 
   static verify(token: string): JwtPayload | string {
-    try {
-      return verify(token, this.secret) as JwtPayload;
-    } catch (error) {
-      return 'Token must be a valid token';
-    }
+    // try {
+    return verify(token, this.secret) as JwtPayload;
+    // } catch (error) {
+    //   return 'Token must be a valid token';
+    // }
   }
 }

@@ -1,8 +1,8 @@
-import { ID } from '.';
+import { ID, NewEntity } from '.';
 
-// export interface ICRUDModelCreator<T> {
-//   create(data: Partial<T>): Promise<T>,
-// }
+export interface ICRUDModelCreator<T> {
+  create(data: NewEntity<T>): Promise<T>,
+}
 
 export interface ICRUDModelReader<T> {
   findAll(): Promise<T[]>,
@@ -21,4 +21,5 @@ export interface ICRUDModelReader<T> {
 //   findByQuery(q: string): Promise<T[]>;
 // }
 
-export type ICRUDModel<T> = ICRUDModelReader<T>;
+export interface ICRUDModel<T>
+  extends ICRUDModelCreator<T>, ICRUDModelReader<T> { }

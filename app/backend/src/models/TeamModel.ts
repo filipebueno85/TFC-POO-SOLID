@@ -1,7 +1,9 @@
-import SequelizeTeam from '../database/models/SequelizeTeam';
+import { NewEntity } from '../Interfaces';
 import { ITeam } from '../Interfaces/teams/ITeam';
+import { ITeamModel } from '../Interfaces/teams/ITeamModel';
+import SequelizeTeam from '../database/models/SequelizeTeam';
 
-export default class TeamModel {
+export default class TeamModel implements ITeamModel {
   private model = SequelizeTeam;
 
   async findAll(): Promise<ITeam[]> {
@@ -15,6 +17,12 @@ export default class TeamModel {
     if (team == null) return null;
 
     const { teamName }: ITeam = team;
+    return { id, teamName };
+  }
+
+  async create(team: NewEntity<ITeam>): Promise<ITeam> {
+    const newTeam = await this.model.create(team);
+    const { id, teamName }: ITeam = newTeam;
     return { id, teamName };
   }
 }

@@ -6,7 +6,8 @@ export interface ILogin {
 }
 
 export interface IUser extends Identifiable, ILogin {
-  email: string
+  email: string,
+  role: string,
 }
 
 export type IUserResponse = Omit<IUser, 'password'>;
