@@ -11,4 +11,10 @@ landerboardRouter.get(
   (req: Request, res: Response) => landerboardController.getLeaderBoardHome(req, res),
 );
 
+landerboardRouter.get(
+  '/leaderboard/away',
+  // Validate.validateToken,
+  (req: Request, res: Response) => landerboardController.getLeaderBoardAway(req, res),
+);
+
 export default landerboardRouter;
