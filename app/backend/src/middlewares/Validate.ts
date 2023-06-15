@@ -53,6 +53,22 @@ export default class Validate {
     return next();
   }
 
+  static async validateMatchesBody(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> {
+    const { homeTeamId, awayTeamId } = req.body;
+    if (homeTeamId === awayTeamId) {
+      return res.status(422)
+        .json({ message: 'It is not possible to create a match with two equal teams' });
+    }
+    // if (!homeTeamId || !awayTeamId) {
+    //   return res.status(404).json({ message: 'There is no team with such id!' });
+    // }
+    return next();
+  }
+
   static async validateToken(req: Request, res: Response, next: NextFunction):
   Promise<Response | void> {
     const token = req.headers.authorization;

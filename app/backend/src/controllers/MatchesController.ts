@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
 import MatchesService from '../services/MatcheService';
+import TeamService from '../services/TeamSevice';
 
 export default class MatchesController {
   private _matchesService: MatchesService;
+  private _teamService: TeamService;
 
   constructor() {
     this._matchesService = new MatchesService();
+    this._teamService = new TeamService();
   }
 
   public async getAll(req: Request, res: Response) {
@@ -42,7 +45,15 @@ export default class MatchesController {
   // }
 
   public async create(req: Request, res: Response) {
+    const foundHomeTeam = await this._teamService.getTeamById(+req.body.homeTeamId);
+    const foundAwayTeam = await this._teamService.getTeamById(+req.body.awayTeamId);
+
     const serviceResponse = await this._matchesService.create(req.body);
-    return res.status(201).json(serviceResponse);
+
+    if (!foundHomeTeam || !foundAwayTeam) {
+      return res.status(404)
+        .json({ message: 'There is no team with such id!' });
+    }
+    return res.status(201).json(serviceResponse.data);
   }
 }

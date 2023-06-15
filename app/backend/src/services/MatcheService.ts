@@ -55,8 +55,8 @@ export default class MatchesService {
   }
 
   async create(match: NewEntity<IMatchCreate>):
-  Promise<IMatche> {
+  Promise<ServiceResponse<IMatche>> {
     const newMatch = await this._matchModel.create({ ...match, inProgress: true });
-    return newMatch;
+    return { status: 'CREATED', data: newMatch };
   }
 }

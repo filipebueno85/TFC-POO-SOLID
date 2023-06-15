@@ -21,6 +21,7 @@ matchesRouter.patch(
 matchesRouter.post(
   '/matches',
   Validate.validateToken,
+  Validate.validateMatchesBody,
   (req: Request, res: Response) => matchesController.create(req, res),
 );
 

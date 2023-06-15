@@ -79,37 +79,37 @@ describe('LoginTest', () => {
     expect(body.message).to.equal('User not found');
   });
 
-  // it('should create a user', async function() {
-  //   sinon.stub(SequelizeUser, 'create').resolves({
-  //     id: 5,
-  //     username: 'filipe',
-  //     email: 'filipe@filipe.com',
-  //     role: 'user',
-  //     password: 'ajajajaaj'
-  //   } as any);
-  //   sinon.stub(SequelizeUser, 'findOne').resolves(null);
-  //   sinon.stub(JWT, 'verify').resolves();
+  it('should create a user', async function() {
+    sinon.stub(SequelizeUser, 'create').resolves({
+      id: 5,
+      username: 'filipe',
+      email: 'filipe@filipe.com',
+      role: 'user',
+      password: 'ajajajaaj'
+    } as any);
+    sinon.stub(SequelizeUser, 'findOne').resolves(null);
+    sinon.stub(JWT, 'verify').resolves();
 
-  //   const { id, username, email, role, password  } = {
-  //     id: 5,
-  //     username: 'filipe',
-  //     email: 'filipe@filipe.com',
-  //     role: 'user',
-  //     password: 'ajajajaaj'
-  //   };
+    const { id, username, email, role, password  } = {
+      id: 5,
+      username: 'filipe',
+      email: 'filipe@filipe.com',
+      role: 'user',
+      password: 'ajajajaaj'
+    };
 
-  //   const { status, body } = await chai.request(app).post('/users').set('authorization', 'validToken').send({ username, email, role, password });
+    const { status, body } = await chai.request(app).post('/users').set('authorization', 'validToken').send({ username, email, role, password });
 
-  //   expect(status).to.be.equal(201);
-  //   expect(body).to.deep.equal({ id, username, email, role  });
-  // });
+    expect(status).to.be.equal(201);
+    expect(body).to.deep.equal({ id, email, role  });
+  });
 
-  // it('should not create a user without a token', async function() {
-  //   const { status, body } = await chai.request(app).post('/users');
+  it('should not create a user without a token', async function() {
+    const { status, body } = await chai.request(app).post('/users');
 
-  //   expect(status).to.equal(404);
-  //   expect(body.message).to.equal('Token not found');
-  // });
+    expect(status).to.equal(401);
+    expect(body.message).to.equal('Token not found');
+  });
 
   it('should not create a user with an invalid token', async function() {
     const { status, body } = await chai.request(app)
