@@ -33,6 +33,7 @@ SequelizeMatches.init({
   homeTeamId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    field: 'home_team_id',
     // references: {
     //   model: 'teams',
     //   key: 'id',
@@ -41,14 +42,17 @@ SequelizeMatches.init({
   homeTeamGoals: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    field: 'home_team_goals',
   },
   awayTeamGoals: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    field: 'away_team_goals',
   },
   awayTeamId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    field: 'away_team_id',
     // references: {
     //   model: 'teams',
     //   key: 'id',
@@ -57,6 +61,7 @@ SequelizeMatches.init({
   inProgress: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
+    field: 'in_progress',
   },
 }, {
   sequelize: db,
@@ -66,10 +71,12 @@ SequelizeMatches.init({
 });
 
 SequelizeTeam.hasMany(SequelizeMatches, {
+  // foreignKey: 'homeTeamId',
   foreignKey: 'home_team_id',
   as: 'homeTeam',
 });
 SequelizeMatches.belongsTo(SequelizeTeam, {
+  // foreignKey: 'homeTeamId',
   foreignKey: 'home_team_id',
   as: 'homeTeam',
 });

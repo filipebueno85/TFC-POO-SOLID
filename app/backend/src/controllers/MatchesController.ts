@@ -45,14 +45,12 @@ export default class MatchesController {
   // }
 
   public async create(req: Request, res: Response) {
-    const foundHomeTeam = await this._teamService.getTeamById(+req.body.homeTeamId);
-    const foundAwayTeam = await this._teamService.getTeamById(+req.body.awayTeamId);
-
     const serviceResponse = await this._matchesService.create(req.body);
 
-    if (!foundHomeTeam || !foundAwayTeam) {
-      return res.status(404)
-        .json({ message: 'There is no team with such id!' });
+    if (serviceResponse.status === 'NOT_FOUND') {
+      return res.status(404).json(
+        serviceResponse.data,
+      );
     }
     return res.status(201).json(serviceResponse.data);
   }
