@@ -3,6 +3,7 @@ import { ID, NewEntity } from '..';
 import { IMatche } from './IMatche';
 
 export type IMatcheModel = ICRUDModel<IMatche>;
+// export type IMatcheModel2 = ICRUDModel<IMatcheGet>;
 
 export interface ICRUDModelCreator<T> {
   create(data: NewEntity<T>): Promise<T>,

@@ -182,10 +182,10 @@ describe('Login Test', function() {
 
   // it('should return a token when login is done', async function() {
   //   sinon.stub(SequelizeUser, 'findOne').resolves({id: 5,
-  //     username: 'fAdmin',
+  //     username: 'Admin',
   //     email: 'admin@admin.com',
   //     role: 'admin',
-  //     ppassword: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+  //     password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
   //   } as any);
   //   sinon.stub(JWT, 'sign').returns('validToken');
 
