@@ -180,65 +180,40 @@ describe('Login Test', function() {
     expect(body).to.be.deep.equal({ message: 'Invalid email or password' });
   });
 
-  // it('should return a token when login is done', async function() {
-  //   sinon.stub(SequelizeUser, 'findOne').resolves({id: 5,
-  //     username: 'Admin',
-  //     email: 'admin@admin.com',
-  //     role: 'admin',
-  //     password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
-  //   } as any);
-  //   sinon.stub(JWT, 'sign').returns('validToken');
+  it('should return a token when login is done', async function() {
+    sinon.stub(SequelizeUser, 'findOne').resolves({id: 5,
+      username: 'Admin',
+      email: 'admin@admin.com',
+      role: 'admin',
+      password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+    } as any);
+    sinon.stub(JWT, 'sign').returns('validToken');
 
-  //   const { status, body } = await chai.request(app)
-  //     .post('/login')
-  //     .send({ email: 'admin@admin.com', password: 'secret_admin' });
+    const { status, body } = await chai.request(app)
+      .post('/login')
+      .send({ email: 'admin@admin.com', password: 'secret_admin' });
 
-  //   expect(status).to.equal(200);
-  //   expect(body).to.have.key('token');
-  // });
+    expect(status).to.equal(200);
+    expect(body).to.have.key('token');
+  });
 
-  // it('should return invalid data when user password is wrong', async function() {
-  //   sinon.stub(SequelizeUser, 'findOne').resolves({
-  //     email: 'filipe@filipe.com',
-  //     ppassword: 'aaaaaaddd'
-  //   } as any);
-  //   sinon.stub(JWT, 'sign').returns('validToken');
+  it('should return invalid data when user password is wrong', async function() {
+    sinon.stub(SequelizeUser, 'findOne').resolves({
+      email: 'filipe@filipe.com',
+      ppassword: 'aaaaaaddd'
+    } as any);
+    sinon.stub(JWT, 'sign').returns('validToken');
 
-  //   const { status, body } = await chai.request(app)
-  //     .post('/login')
-  //     .send({
-  //       email: 'filipe@filipe.com',
-  //       password: "ssssssssss"
-  //     });
+    const { status, body } = await chai.request(app)
+      .post('/login')
+      .send({
+        email: 'filipe@filipe.com',
+        password: "ss"
+      });
 
-  //   expect(status).to.equal(400);
-  //   expect(body.message).to.equal('Invalid email or password');
-  // });
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
-
-  // let chaiHttpResponse: Response;
-
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
-
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
-
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
+    expect(status).to.equal(401);
+    expect(body.message).to.equal('Invalid email or password');
+  });
 
   afterEach(sinon.restore);
 });
