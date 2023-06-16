@@ -11,16 +11,6 @@ export interface IMatche extends Identifiable {
   awayTeam?: ITeam;
 }
 
-export interface IMatche2 extends Identifiable {
-  homeTeamId: number;
-  homeTeamGoals: number;
-  awayTeamGoals: number;
-  awayTeamId: number;
-  inProgress: boolean;
-  homeTeam: ITeam;
-  awayTeam: ITeam;
-}
-
 export interface IMatchCreate extends Identifiable {
   homeTeamId: number;
   homeTeamGoals: number;

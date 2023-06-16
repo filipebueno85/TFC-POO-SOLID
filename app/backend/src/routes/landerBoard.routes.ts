@@ -6,6 +6,12 @@ const landerboardController = new LeaderboardController();
 const landerboardRouter = Router();
 
 landerboardRouter.get(
+  '/leaderboard',
+  // Validate.validateToken,
+  (req: Request, res: Response) => landerboardController.getAllLeaderboard(req, res),
+);
+
+landerboardRouter.get(
   '/leaderboard/home',
   // Validate.validateToken,
   (req: Request, res: Response) => landerboardController.getLeaderBoardHome(req, res),

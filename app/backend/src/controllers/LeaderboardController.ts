@@ -1,14 +1,17 @@
 import { Request, Response } from 'express';
 import LeaderboardAwayService from '../services/LeaderAwayboardService';
+import LeaderboardAllService from '../services/LeaderboardAllService';
 import LeaderboardService from '../services/LeaderboardService';
 
 export default class LeaderboardController {
   private leaderboardService: LeaderboardService;
   private leaderboardAwayService: LeaderboardAwayService;
+  private leaderboardAllService: LeaderboardAllService;
 
   constructor() {
     this.leaderboardService = new LeaderboardService();
     this.leaderboardAwayService = new LeaderboardAwayService();
+    this.leaderboardAllService = new LeaderboardAllService();
   }
 
   public async getLeaderBoardHome(_req: Request, res: Response) {
@@ -27,5 +30,15 @@ export default class LeaderboardController {
     || b.goalsFavor - a.goalsFavor || b.goalsOwn - a.goalsOwn
     || b.efficiency - a.efficiency || b.totalGames - a.totalGames);
     return res.status(200).json(orderAway);
+  }
+
+  public async getAllLeaderboard(_req: Request, res: Response) {
+    const serviceResponse = await this.leaderboardAllService.getAllLeaderboard();
+    const order = serviceResponse.sort((a, b) => b.totalPoints - a.totalPoints
+    || b.totalVictories - a.totalVictories || b.goalsBalance - a.goalsBalance
+    || b.goalsFavor - a.goalsFavor || b.goalsOwn - a.goalsOwn
+    || b.efficiency - a.efficiency || b.totalLosses - a.totalLosses
+    || b.totalGames - a.totalGames);
+    return res.status(200).json(order);
   }
 }
