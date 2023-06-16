@@ -111,7 +111,7 @@ describe('LoginTest', () => {
     expect(body.message).to.equal('Token not found');
   });
 
-  it('should not create a user with an invalid token', async function() {
+  it('should not create a user with an invalid token ', async function() {
     const { status, body } = await chai.request(app)
       .post('/users')
       .set('authorization', 'invalidToken');
