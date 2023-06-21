@@ -33,17 +33,7 @@ export default class MatchesController {
     await this._matchesService.updateGoals(+id, +homeTeamGoals, +awayTeamGoals);
     return res.status(200).json({ message: 'Updated' });
   }
-
-  // public async getById(req: Request, res: Response) {
-  //   const { id } = req.params;
-
-  //   const serviceResponse = await this._matchesService.findById(+id);
-  //   if (serviceResponse.status !== 'SUCCESSFUL') {
-  //     return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
-  //   }
-  //   return res.status(200).json(serviceResponse.data);
-  // }
-
+  
   public async create(req: Request, res: Response) {
     const serviceResponse = await this._matchesService.create(req.body);
 
