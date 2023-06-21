@@ -1,13 +1,13 @@
 import { ILeaderboardEntry } from '../Interfaces/landerboard/ILeaderbord';
 import LeaderboardAwayService from './LeaderAwayboardService';
-import LeaderboardService from './LeaderboardService';
+import LeaderboardHomeService from './LeaderboardHomeService';
 
 export default class LeaderboardAllService {
-  private leaderboardHomeService: LeaderboardService;
+  private leaderboardHomeService: LeaderboardHomeService;
   private leaderboardAwayService: LeaderboardAwayService;
 
   constructor() {
-    this.leaderboardHomeService = new LeaderboardService();
+    this.leaderboardHomeService = new LeaderboardHomeService();
     this.leaderboardAwayService = new LeaderboardAwayService();
   }
 

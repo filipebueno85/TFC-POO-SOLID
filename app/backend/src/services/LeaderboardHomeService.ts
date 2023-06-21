@@ -4,7 +4,7 @@ import { IMatcheModel } from '../Interfaces/matches/IMatcheModel';
 import SequelizeTeam from '../database/models/SequelizeTeam';
 import MatchesModel from '../models/MatchesModel';
 
-export default class LeaderboardService {
+export default class LeaderboardHomeService {
   private matchesModel: IMatcheModel;
 
   constructor(matchesModel: IMatcheModel = new MatchesModel()) {
@@ -28,7 +28,7 @@ export default class LeaderboardService {
       ],
     });
 
-    const leaderboard = LeaderboardService.buildLeaderboard(queryOptions);
+    const leaderboard = LeaderboardHomeService.buildLeaderboard(queryOptions);
 
     return Object.values(leaderboard);
   }
@@ -38,9 +38,9 @@ export default class LeaderboardService {
     matches.forEach((match) => {
       const homeTeam = match.homeTeam?.teamName;
       if (homeTeam !== undefined && !leaderboard[homeTeam]) {
-        leaderboard[homeTeam] = LeaderboardService.createTeamObject(homeTeam);
+        leaderboard[homeTeam] = LeaderboardHomeService.createTeamObject(homeTeam);
       }
-      LeaderboardService.updateTeamStats(leaderboard, homeTeam, match);
+      LeaderboardHomeService.updateTeamStats(leaderboard, homeTeam, match);
     });
     return leaderboard;
   }
@@ -53,10 +53,10 @@ export default class LeaderboardService {
     if (homeTeam !== undefined) {
       const team = leaderboard[homeTeam];
       team.totalGames += 1;
-      team.totalPoints += LeaderboardService.calculatePoints(match);
-      team.totalVictories += LeaderboardService.isVictory(match) ? 1 : 0;
-      team.totalDraws += LeaderboardService.isDraw(match) ? 1 : 0;
-      team.totalLosses += LeaderboardService.isLoss(match) ? 1 : 0;
+      team.totalPoints += LeaderboardHomeService.calculatePoints(match);
+      team.totalVictories += LeaderboardHomeService.isVictory(match) ? 1 : 0;
+      team.totalDraws += LeaderboardHomeService.isDraw(match) ? 1 : 0;
+      team.totalLosses += LeaderboardHomeService.isLoss(match) ? 1 : 0;
       team.goalsFavor += match.homeTeamGoals;
       team.goalsOwn += match.awayTeamGoals;
       team.efficiency = +((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);

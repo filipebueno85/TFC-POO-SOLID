@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import LeaderboardAwayService from '../services/LeaderAwayboardService';
 import LeaderboardAllService from '../services/LeaderboardAllService';
-import LeaderboardService from '../services/LeaderboardService';
+import LeaderboardHomeService from '../services/LeaderboardHomeService';
 
 export default class LeaderboardController {
-  private leaderboardService: LeaderboardService;
+  private leaderboardService: LeaderboardHomeService;
   private leaderboardAwayService: LeaderboardAwayService;
   private leaderboardAllService: LeaderboardAllService;
 
   constructor() {
-    this.leaderboardService = new LeaderboardService();
+    this.leaderboardService = new LeaderboardHomeService();
     this.leaderboardAwayService = new LeaderboardAwayService();
     this.leaderboardAllService = new LeaderboardAllService();
   }
